@@ -1,0 +1,19 @@
+{
+  "name": "Tweetship",
+  "version": "0.1.0",
+  "description": "Twitter Client",
+  "author": "ayame.space",
+  "main": "./src/main.js",
+  "scripts": {
+    "start": "electron ./",
+    "build": "npm run build-mac; npm run build-win64; npm run build-win32",
+    "build-mac": "electron-packager ./ --out=./bin --platform=darwin --arch=x64 --icon=icon/app.icns --app-copyright='Author: ayame.space (@ayame_q)' --overwrite --app-bundle-id=space.ayame.tweetship.desktop --app-category-type=public.app-category.social-networking",
+    "build-win64": "electron-packager ./ --out=./bin --platform=win32 --arch=x64 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite",
+    "build-win32": "electron-packager ./ --out=./bin --platform=win32 --arch=ia32 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^2.0.7",
+    "electron-packager": "^12.1.1"
+  }
+}
