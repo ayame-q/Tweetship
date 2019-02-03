@@ -199,7 +199,8 @@ function addCSS(){
             -webkit-app-region: no-drag;
         }
         .is-condensed .attach-compose-buttons .tweet-button {
-            width: 57px;
+            width: 64px;
+            padding-left: 4px;
         }
         .is-condensed .app-content {
             left: 78px;
@@ -211,10 +212,10 @@ function addCSS(){
             padding-top: 36px;
         }
         .app-header.is-condensed .app-header-inner {
-            width: 50px;
+            width: 64px;
             padding: 36px 7px 3px 7px;
             box-sizing: border-box;
-            margin: 0 14px;
+            margin: 0 7px;
         }
         .is-condensed .app-header {
             width: 78px;
