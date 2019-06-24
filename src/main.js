@@ -234,8 +234,11 @@ ipcMain.on('ipc', (event, args) => {
 	
 	// リンクが開かれたときの処理
 	mainWindow.webContents.on('new-window', (event, url) => {
-		event.preventDefault()
-		shell.openExternal(url)
+		console.log(url)
+		if(!url.match(/^https:\/\/(.+\.)?twitter\.com\/teams\/.*/)) {
+			event.preventDefault()
+			shell.openExternal(url)
+		}
 	})
 	
 	createMenu()
