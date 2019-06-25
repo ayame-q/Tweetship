@@ -225,31 +225,14 @@ function addCSS(){
 }
 
 ipcMain.on('ipc', (event, args) => {
-	
-	
+
 	// Macの場合CSSを編集する
 	if (process.platform == 'darwin') {
 		addCSS()
 	}
-	
-	// リンクが開かれたときの処理
-	mainWindow.webContents.on('new-window', (event, url) => {
-		console.log(url)
-		if(!url.match(/^https:\/\/(.+\.)?twitter\.com\/teams\/.*/)) {
-			event.preventDefault()
-			shell.openExternal(url)
-		}
-	})
-	
+
 	createMenu()
-	
-	// メインウインドウが閉じられる前の処理
-	mainWindow.on('close', () => {
-		fs.writeFileSync(
-			boundsFile, JSON.stringify(mainWindow.getBounds())
-		)
-	})
-	
+
 })
 
 function createWindow() {
@@ -273,7 +256,22 @@ function createWindow() {
 	electron.powerMonitor.on('resume', () => {
 		mainWindow.reload()
 	})
-	
+
+	// リンクが開かれたときの処理
+	mainWindow.webContents.on('new-window', (event, url) => {
+		if(!url.match(/^https:\/\/(.+\.)?twitter\.com\/teams\/.*/)) {
+			event.preventDefault()
+			shell.openExternal(url)
+		}
+	})
+
+	// メインウインドウが閉じられる前の処理
+	mainWindow.on('close', () => {
+		fs.writeFileSync(
+			boundsFile, JSON.stringify(mainWindow.getBounds())
+		)
+	})
+
 	// メインウィンドウが閉じられたときの処理
 	mainWindow.on('closed', () => {
 		app.quit()
