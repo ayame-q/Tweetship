@@ -1,6 +1,6 @@
 {
   "name": "Tweetship",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Twitter Client",
   "author": "ayame.space",
   "main": "./src/main.js",

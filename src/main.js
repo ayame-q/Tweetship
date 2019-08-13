@@ -19,10 +19,24 @@ const fs = require("fs")
 // メインウィンドウ
 let mainWindow
 
+// 設定ファイルを保存するファイル
+let configFile = path.join(
+	app.getPath('userData'), 'config.json'
+)
+
+// 保存しておいた設定項目の取得
+let config = null
+try {
+	config = JSON.parse(fs.readFileSync(configFile, 'utf8'))
+} catch (e) {
+	config = { "isReloadAfterSleep":true }
+}
+
 // ウィンドウサイズを保存するファイル
 let boundsFile = path.join(
 	app.getPath('userData'), 'bounds.json'
-);
+)
+
 // 保存しておいたウィンドウサイズの取得
 let bounds = null
 try {
@@ -30,6 +44,7 @@ try {
 } catch (e) {
 	bounds = { "width":1024, "height":768 }
 }
+
 
 function createMenu() {
 	// メニューバーの項目を設定
@@ -129,6 +144,14 @@ function createMenu() {
 			submenu: [
 				{role: 'reload'},
 				{role: 'forcereload'},
+				{
+					label: 'Reload automatically after returning from sleep',
+					type: 'checkbox',
+					checked: config.isReloadAfterSleep,
+					click(item, focusedWindow) {
+						config.isReloadAfterSleep = !config.isReloadAfterSleep
+					}
+				},
 				{role: 'toggledevtools'},
 				{type: 'separator'},
 				{role: 'resetzoom'},
@@ -183,6 +206,15 @@ function createMenu() {
 			{type: 'separator'},
 			{role: 'front'}
 		]
+	} else {
+		menuTemplate.push(
+			{
+				label: 'Help',
+				submenu: [
+					{role: 'about'}
+				]
+			}
+		)
 	}
 	const menu = Menu.buildFromTemplate(menuTemplate)
 	Menu.setApplicationMenu(menu)
@@ -227,7 +259,7 @@ function addCSS(){
 ipcMain.on('ipc', (event, args) => {
 
 	// Macの場合CSSを編集する
-	if (process.platform == 'darwin') {
+	if (process.platform === 'darwin') {
 		addCSS()
 	}
 
@@ -254,7 +286,9 @@ function createWindow() {
 	
 	// スリープから復帰した際の処理
 	electron.powerMonitor.on('resume', () => {
-		mainWindow.reload()
+		if(config.isReloadAfterSleep) {
+			mainWindow.reload()
+		}
 	})
 
 	// リンクが開かれたときの処理
@@ -267,6 +301,9 @@ function createWindow() {
 
 	// メインウインドウが閉じられる前の処理
 	mainWindow.on('close', () => {
+		fs.writeFileSync(
+			configFile, JSON.stringify(config)
+		)
 		fs.writeFileSync(
 			boundsFile, JSON.stringify(mainWindow.getBounds())
 		)
