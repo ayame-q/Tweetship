@@ -1,6 +1,6 @@
 {
   "name": "Tweetship",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Twitter Client",
   "author": "ayame.space",
   "main": "./src/main.js",
@@ -15,6 +15,6 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^2.0.18",
-    "electron-packager": "^14.0.0"
+    "electron-packager": "^14.0.6"
   }
 }
