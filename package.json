@@ -1,20 +1,22 @@
 {
   "name": "Tweetship",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Twitter Client",
   "author": "ayame.space",
   "main": "./src/main.js",
   "scripts": {
     "start": "electron ./",
-    "build": "npm run build-mac; npm run build-win64; npm run build-win32",
-    "build-win": "npm run build-win64; npm run build-win32",
-    "build-mac": "electron-packager ./ --out=./bin --platform=darwin --arch=x64 --icon=icon/app.icns --app-copyright='Author: ayame.space (@ayame_q)' --overwrite --app-bundle-id=space.ayame.tweetship.desktop --app-category-type=public.app-category.social-networking",
-    "build-win64": "electron-packager ./ --out=./bin --platform=win32 --arch=x64 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite",
-    "build-win32": "electron-packager ./ --out=./bin --platform=win32 --arch=ia32 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite"
+    "build": "npm run build-mac; npm run build-win",
+    "build-mac": "npm run build-mac-arm64; npm run build-mac-x64",
+    "build-win": "npm run build-win-64; npm run build-win-32",
+    "build-mac-x64": "electron-packager ./ --out=./bin --platform=darwin --arch=x64 --icon=icon/app.icns --app-copyright='Author: ayame.space (@ayame_q)' --overwrite --app-bundle-id=space.ayame.tweetship.desktop --app-category-type=public.app-category.social-networking",
+    "build-mac-arm64": "electron-packager ./ --out=./bin --platform=darwin --arch=arm64 --icon=icon/app.icns --app-copyright='Author: ayame.space (@ayame_q)' --overwrite --app-bundle-id=space.ayame.tweetship.desktop --app-category-type=public.app-category.social-networking",
+    "build-win-64": "electron-packager ./ --out=./bin --platform=win32 --arch=x64 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite",
+    "build-win-32": "electron-packager ./ --out=./bin --platform=win32 --arch=ia32 --icon=icon/app.ico --app-copyright='Author: ayame.space (@ayame_q)' --overwrite"
   },
   "license": "MIT",
-  "devDependencies": {
-    "electron": "^2.0.18",
-    "electron-packager": "^14.0.6"
+  "dependencies": {
+    "electron": "^19.0.3",
+    "electron-packager": "^15.5.1"
   }
 }
